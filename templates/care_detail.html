@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • Care Detail{% endblock %}
+
+{% block content %}
+
+<section class="panel-card">
+    <div class="panel-head">
+        <div class="panel-title">{{ item.title }}</div>
+        <div class="panel-sub">Detailed advice</div>
+    </div>
+
+    <div class="detail-block">
+        <p><strong>Symptoms:</strong> {{ item.symptoms }}</p>
+        <p><strong>Treatment:</strong> {{ item.treatment }}</p>
+    </div>
+
+    <div class="detail-actions">
+        <a class="primary-cta" href="{{ url_for('diagnose') }}">Scan a New Leaf</a>
+    </div>
+</section>
+
+{% endblock %}

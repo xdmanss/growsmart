@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • Diagnose{% endblock %}
+
+{% block content %}
+<section class="diagnose-layout">
+
+    <div class="diagnose-left">
+        <div class="panel-card">
+            <div class="panel-head">
+                <div class="panel-title">
+                    <span class="lang-en">Plant Diagnosis</span>
+                    <span class="lang-ar">تشخيص النبات</span>
+                </div>
+                <div class="panel-sub">
+                    <span class="lang-en">Upload a clear photo of a single leaf (front side).</span>
+                    <span class="lang-ar">ارفع صورة واضحة لورقة واحدة (الجهة الأمامية).</span>
+                </div>
+            </div>
+
+            <form class="upload-block" action="{{ url_for('diagnose') }}" method="POST" enctype="multipart/form-data">
+                <label class="file-label">
+                    <span class="file-label-title">
+                        <span class="lang-en">Choose Leaf Image</span>
+                        <span class="lang-ar">اختر صورة الورقة</span>
+                    </span>
+                    <input class="file-input" type="file" name="plant_image" accept="image/*" required />
+                </label>
+
+                <button class="primary-cta" type="submit">
+                    <span class="lang-en">Analyze Now</span>
+                    <span class="lang-ar">حلّل الآن</span>
+                </button>
+            </form>
+
+            {% if just_uploaded and last_result %}
+            <div class="success-msg">
+                ✅
+                <span class="lang-en">Scan completed successfully</span>
+                <span class="lang-ar">تم التحليل بنجاح</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="panel-card">
+            <div class="panel-head">
+                <div class="panel-title">
+                    <span class="lang-en">{{ lang_content.tips_best_accuracy.en }}</span>
+                    <span class="lang-ar">{{ lang_content.tips_best_accuracy.ar }}</span>
+                </div>
+            </div>
+
+            <ul class="accuracy-tips">
+                {% for t in lang_content.tips_items %}
+                <li>
+                    <span class="lang-en">{{ t.en }}</span>
+                    <span class="lang-ar">{{ t.ar }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="diagnose-right">
+        {% if last_result %}
+        <div class="panel-card result-card fade-in-up">
+            <div class="leaf-preview">
+                <img src="{{ last_result.image_url }}" alt="Leaf image"/>
+            </div>
+
+            <div class="result-lines">
+                <div class="result-row"><strong>Disease:</strong> {{ last_result.prediction }}</div>
+                <div class="result-row"><strong>Confidence:</strong> {{ (last_result.confidence * 100) | round(1) }}%</div>
+                <div class="result-row"><strong>Time:</strong> {{ last_result.timestamp }}</div>
+            </div>
+
+            <div class="conf-bar-wrap">
+                <div class="conf-bar">
+                    <div class="conf-fill" style="width: {{ (last_result.confidence * 100) | round(1) }}%"></div>
+                </div>
+                <div class="conf-label">Model Confidence</div>
+            </div>
+
+            <div class="advice-box">
+                <div class="advice-head">
+                    <span class="lang-en">Recommended Action</span>
+                    <span class="lang-ar">الإجراء المقترح</span>
+                </div>
+                <div class="advice-text">{{ advice }}</div>
+            </div>
+
+            <div class="diagnose-actions">
+                <a class="ghost-btn wide" href="{{ url_for('history') }}">
+                    <span class="lang-en">View full history →</span>
+                    <span class="lang-ar">عرض السجل كاملًا →</span>
+                </a>
+                <form method="get" action="{{ url_for('diagnose') }}">
+                    <button type="submit" class="primary-cta wide">
+                        <span class="lang-en">🔄 Analyze Another Leaf</span>
+                        <span class="lang-ar">🔄 تحليل ورقة أخرى</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="panel-card placeholder-card fade-in-up">
+            <div class="placeholder-icon">🌿</div>
+            <div class="placeholder-text">
+                <span class="lang-en">Your scan result will appear here after upload.</span>
+                <span class="lang-ar">سيظهر التحليل هنا بعد الرفع.</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</section>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Care & Treatment Guide{% endblock %}
+
+{% block content %}
+<section class="care-section">
+    <h2>🌿 Care & Treatment Guide</h2>
+    <p>Common problems and how to fix them</p>
+
+    <form method="get" class="select-form">
+        <label for="fruit">Choose Plant:</label>
+        <select name="fruit" id="fruit" onchange="this.form.submit()">
+            <option value="">Select fruit</option>
+            {% for fruit in fruits %}
+                <option value="{{ fruit }}" {% if fruit == selected_fruit %}selected{% endif %}>{{ fruit }}</option>
+            {% endfor %}
+        </select>
+
+        {% if selected_fruit %}
+        <label for="disease">Choose Disease:</label>
+        <select name="disease" id="disease" onchange="this.form.submit()">
+            <option value="">Select disease</option>
+            {% for d in diseases %}
+                <option value="{{ d.name }}" {% if selected_disease == d.name %}selected{% endif %}>{{ d.name }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+    </form>
+
+    {% if selected_details %}
+    <div class="disease-card">
+        <h3>{{ selected_disease }}</h3>
+        <p><b>Symptoms:</b> {{ selected_details.symptoms }}</p>
+        <p><b>Treatment:</b> {{ selected_details.treatment }}</p>
+    </div>
+    {% elif selected_fruit %}
+        <p class="hint">Select a disease to view treatment details.</p>
+    {% endif %}
+</section>
+
+<style>
+.care-section {
+    color: #e8f5e9;
+    padding: 30px;
+    background: linear-gradient(180deg, #102a12 0%, #0b1e0c 100%);
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0,255,100,0.05);
+    margin: 20px auto;
+    width: 90%;
+    text-align: center;
+}
+h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #b9ffb5;
+}
+.select-form {
+    margin: 20px 0;
+}
+select {
+    background-color: #0f3312;
+    color: #c8ffc9;
+    border: 1px solid #3cb371;
+    border-radius: 8px;
+    padding: 6px 12px;
+    margin: 5px;
+    font-size: 1em;
+}
+select:hover {
+    box-shadow: 0 0 8px #00ff88;
+}
+.disease-card {
+    background-color: #123c1a;
+    border: 1px solid #00ff88;
+    color: #e0ffe0;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.disease-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(0,255,150,0.2);
+}
+.hint {
+    color: #a3d9a5;
+    font-style: italic;
+    margin-top: 20px;
+}
+</style>
+{% endblock %}

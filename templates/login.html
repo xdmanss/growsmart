@@ -1,0 +1,32 @@
+{% extends "auth_base.html" %}
+{% block title %}Login • GrowSmart{% endblock %}
+
+{% block content %}
+
+<h1 class="auth-heading">Welcome back</h1>
+<p class="auth-desc">Sign in to continue to your dashboard.</p>
+
+{% if error_msg %}
+<div class="auth-error">{{ error_msg }}</div>
+{% endif %}
+
+<form method="POST" class="auth-form">
+    <label class="auth-label">
+        Email
+        <input class="auth-input" type="email" name="email" required />
+    </label>
+
+    <label class="auth-label">
+        Password
+        <input class="auth-input" type="password" name="password" required />
+    </label>
+
+    <button class="primary-cta wide" type="submit">Log In</button>
+</form>
+
+<div class="auth-switch">
+    No account?
+    <a href="{{ url_for('signup') }}">Create one →</a>
+</div>
+
+{% endblock %}

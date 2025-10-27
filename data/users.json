@@ -1,0 +1,8 @@
+{
+    "fzx": {
+        "password": "scrypt:32768:8:1$fl2kipjzE9RaB4Is$fe93c11963ae146153e0a692a33093ea0a75eca431d016efa3513cb4c1539c159e41d72b20fb086d3e4fcdbd4e7add5f64569a7c370892cde691d7728a3b25d9",
+        "theme": "light",
+        "lang": "en",
+        "role": "user"
+    }
+}

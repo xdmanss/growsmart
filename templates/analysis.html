@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • Analysis{% endblock %}
+
+{% block content %}
+
+<section class="analysis-grid">
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <div class="panel-title">System Health</div>
+            <div class="panel-sub">AI performance overview</div>
+        </div>
+        <ul class="stat-list">
+            <li><strong>Total Scans:</strong> {{ metrics.total_scans }}</li>
+            <li><strong>Healthy Rate:</strong> {{ metrics.healthy_pct }}%</li>
+            <li><strong>Issue Detection Rate:</strong> {{ metrics.disease_pct }}%</li>
+            <li><strong>Last Activity:</strong>
+                {% if metrics.last_scan_time %}{{ metrics.last_scan_time }}{% else %}—{% endif %}
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <div class="panel-title">Top Detected Conditions</div>
+            <div class="panel-sub">Most common results</div>
+        </div>
+
+        {% if freq %}
+        <ul class="freq-list">
+            {% for label, count in freq.items() %}
+            <li class="freq-row">
+                <span class="freq-label">{{ label }}</span>
+                <span class="freq-count">{{ count }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="empty-block">No scans to analyze yet.</div>
+        {% endif %}
+    </div>
+
+    <div class="panel-card panel-chart">
+        <div class="panel-head">
+            <div class="panel-title">Confidence Timeline</div>
+            <div class="panel-sub">Each scan’s confidence</div>
+        </div>
+        <canvas id="timelineChart"></canvas>
+        <script>
+        window.ANALYSIS_TIMELINE = {{ timeline|tojson }};
+        </script>
+    </div>
+
+</section>
+
+{% endblock %}

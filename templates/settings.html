@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • Settings{% endblock %}
+
+{% block content %}
+
+<section class="settings-grid">
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <div class="panel-title">Appearance</div>
+            <div class="panel-sub">Choose theme</div>
+        </div>
+
+        <div class="settings-block">
+            <button class="primary-cta" onclick="toggleTheme()">Toggle Light / Dark</button>
+            <div class="settings-hint">Your choice is saved.</div>
+        </div>
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <div class="panel-title">Language</div>
+            <div class="panel-sub">English / العربية</div>
+        </div>
+
+        <div class="settings-block">
+            <button class="primary-cta" onclick="toggleLang()">Switch Language</button>
+            <div class="settings-hint">Also flips layout RTL/LTR.</div>
+        </div>
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <div class="panel-title">Account</div>
+            <div class="panel-sub">Your info</div>
+        </div>
+
+        <div class="settings-block">
+            <div><strong>Name:</strong> {{ current_user.name }}</div>
+            <div><strong>Email:</strong> {{ current_user.email }}</div>
+            <div class="settings-hint">Login is protected. Do not share credentials.</div>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

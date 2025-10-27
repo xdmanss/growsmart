@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • Admin{% endblock %}
+
+{% block content %}
+
+<section class="admin-grid">
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <div class="panel-title">System Metrics</div>
+            <div class="panel-sub">Private view (demo)</div>
+        </div>
+
+        <ul class="stat-list">
+            <li><strong>Total Scans:</strong> {{ metrics.total_scans }}</li>
+            <li><strong>Suspected Issues:</strong> {{ metrics.suspected_disease }}</li>
+            <li><strong>Healthy Leaves:</strong> {{ metrics.healthy_leaves }}</li>
+            <li><strong>Last Scan Time:</strong>
+                {% if metrics.last_scan_time %}{{ metrics.last_scan_time }}{% else %}—{% endif %}
+            </li>
+        </ul>
+
+        <div class="admin-export-row">
+            <a class="ghost-btn" href="{{ url_for('api_export_scans') }}">Export JSON</a>
+        </div>
+    </div>
+
+    <div class="panel-card">
+        <div class="panel-head">
+            <div class="panel-title">Recent 5 Scans</div>
+            <div class="panel-sub">Quick audit</div>
+        </div>
+
+        {% if history_preview|length == 0 %}
+        <div class="empty-block">No data yet.</div>
+        {% else %}
+        <ul class="recent-list">
+            {% for h in history_preview %}
+            <li class="recent-item small">
+                <div class="recent-main">
+                    <div class="recent-pred">{{ h.prediction }}</div>
+                    <div class="recent-meta">
+                        {{ (h.confidence * 100)|round(1) }}% • {{ h.timestamp }}
+                    </div>
+                </div>
+                <div class="recent-thumb">
+                    <img src="{{ h.image_url }}" alt="leaf"/>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+</section>
+
+{% endblock %}

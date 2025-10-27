@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Hero -->
+<section class="hero-section text-center py-5 mt-5 animate__animated animate__fadeIn">
+  <div class="container">
+    <h1 class="fw-bold text-success display-5 mb-3 animate__animated animate__fadeInDown">
+      Welcome to <span class="text-dark">GrowSmart</span> 🌱
+    </h1>
+    <p class="lead text-muted mx-auto mb-4 animate__animated animate__fadeInUp" style="max-width: 800px;">
+      Using AI technology to help farmers and communities in the UAE detect plant diseases early,
+      protect crops, and support a greener future.
+    </p>
+    <a href="#diagnose" class="btn btn-success btn-lg shadow animate__animated animate__pulse animate__infinite">
+      Start Diagnosing 🌿
+    </a>
+    <div class="mt-4 animate__animated animate__zoomIn">
+      <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1000&q=80"
+           alt="Healthy plants" class="img-fluid rounded shadow-lg hero-img">
+    </div>
+  </div>
+</section>
+
+<!-- Diagnose -->
+<section id="diagnose" class="container py-5 animate__animated animate__fadeInUp">
+  <h2 class="text-success fw-bold text-center mb-4">🌿 Diagnose Your Plant</h2>
+  <p class="lead text-muted text-center mb-4">Upload a leaf image to detect plant diseases using AI.</p>
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form id="diagnoseForm" method="POST" enctype="multipart/form-data" class="mb-4">
+        <div class="input-group shadow-sm">
+          <input type="file" name="file" class="form-control form-control-lg" accept="image/*" required>
+          <button class="btn btn-success btn-lg" type="submit">Predict</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if file_url %}
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-7 text-center animate__animated animate__fadeIn">
+      <img src="{{ file_url }}" alt="Uploaded Image" class="img-fluid rounded shadow mb-3">
+      <h3 class="text-success fw-bold fs-2">{{ prediction }}</h3>
+      <p class="fs-5 text-muted mb-3">Confidence: {{ confidence }}%</p>
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-success fw-bold">Top 3 Predictions</h5>
+          <ul class="list-group list-group-flush">
+            {% for label, conf in top3 %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ label }}</span>
+              <span class="fw-bold">{{ conf|round(2) }}%</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+<!-- Dashboard Summary -->
+<section id="dashboard" class="container py-5 animate__animated animate__fadeInUp">
+  <h2 class="text-success fw-bold text-center mb-4">📊 GrowSmart Dashboard</h2>
+  <p class="lead text-muted text-center mb-5">Live summary of all plant diagnoses done so far.</p>
+
+  <div class="row justify-content-center g-4 text-center">
+    <div class="col-md-4">
+      <div class="metric-card p-4 shadow-sm">
+        <div class="metric-value" id="totalImages">0</div>
+        <div class="text-muted">Images Analyzed</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="metric-card p-4 shadow-sm">
+        <div class="metric-value" id="commonDisease">N/A</div>
+        <div class="text-muted">Most Common Disease</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="metric-card p-4 shadow-sm">
+        <div class="metric-value" id="avgConfidence">0%</div>
+        <div class="text-muted">Average Confidence</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay">
+  <div class="loader">
+    <div class="leaf"></div>
+    <p>Analyzing your leaf...</p>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+const form = document.getElementById("diagnoseForm");
+const overlay = document.getElementById("loadingOverlay");
+
+form.addEventListener("submit", () => {
+  overlay.style.display = "flex";
+});
+
+async function updateDashboard() {
+  try {
+    const res = await fetch("/dashboard-data");
+    const data = await res.json();
+    document.getElementById("totalImages").textContent = data.total;
+    document.getElementById("commonDisease").textContent = data.common;
+    document.getElementById("avgConfidence").textContent = data.avg_conf + "%";
+  } catch (err) {
+    console.error("Dashboard load error:", err);
+  }
+}
+document.addEventListener("DOMContentLoaded", updateDashboard);
+</script>
+
+{% endblock %}

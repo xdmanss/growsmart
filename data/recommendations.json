@@ -1,0 +1,202 @@
+{
+  "Apple___Black_rot": {
+    "summary": "A fungal disease that causes dark lesions on leaves and fruit, often circular and sunken.",
+    "advice": [
+      "Remove infected fruit and leaves.",
+      "Avoid overhead irrigation.",
+      "Use a fungicide spray approved for apples."
+    ]
+  },
+  "Apple___Cedar_apple_rust": {
+    "summary": "Rust disease appearing as orange or rust-colored spots on apple leaves and fruit.",
+    "advice": [
+      "Remove nearby juniper trees (alternate host).",
+      "Apply fungicide early in the season.",
+      "Prune affected areas to prevent spread."
+    ]
+  },
+  "Apple___scab": {
+    "summary": "Fungal disease that causes dark, scabby spots on leaves and fruit.",
+    "advice": [
+      "Collect and destroy fallen leaves.",
+      "Use resistant apple varieties when possible.",
+      "Apply fungicide during early leaf growth."
+    ]
+  },
+  "Apple___healthy": {
+    "summary": "The apple leaf looks healthy.",
+    "advice": [
+      "Continue regular watering and pruning.",
+      "Maintain soil nutrients.",
+      "Monitor weekly for early disease signs."
+    ]
+  },
+  "Bell_Pepper___Bacterial_spot": {
+    "summary": "A bacterial infection that causes small, dark spots on leaves and fruits.",
+    "advice": [
+      "Avoid overhead watering.",
+      "Use copper-based bactericide.",
+      "Disinfect tools and avoid handling plants when wet."
+    ]
+  },
+  "Bell_Pepper___healthy": {
+    "summary": "Healthy bell pepper leaf detected.",
+    "advice": [
+      "Keep consistent moisture and sunlight.",
+      "Avoid waterlogging.",
+      "Inspect regularly for pests."
+    ]
+  },
+  "Cherry___Powdery_mildew": {
+    "summary": "White or grayish powdery coating on leaves caused by fungal growth.",
+    "advice": [
+      "Prune for better air circulation.",
+      "Avoid excessive nitrogen fertilizer.",
+      "Use sulfur spray if needed."
+    ]
+  },
+  "Cherry___healthy": {
+    "summary": "The cherry leaf appears healthy.",
+    "advice": [
+      "Maintain balanced watering.",
+      "Check underside of leaves for early mold.",
+      "Fertilize moderately."
+    ]
+  },
+  "Grape___Black_rot": {
+    "summary": "Dark circular lesions on leaves and berries caused by fungal infection.",
+    "advice": [
+      "Remove mummified berries.",
+      "Ensure sunlight exposure between vines.",
+      "Apply fungicide before rain events."
+    ]
+  },
+  "Grape___Esca_Black_measles": {
+    "summary": "Fungal disease causing leaf burn, dark spots, and internal wood decay.",
+    "advice": [
+      "Avoid over-irrigation.",
+      "Remove severely affected vines.",
+      "Maintain pruning tool hygiene."
+    ]
+  },
+  "Grape___Leaf_blight": {
+    "summary": "Blight causing brown patches and leaf curling.",
+    "advice": [
+      "Trim infected leaves.",
+      "Improve airflow and reduce humidity.",
+      "Use protective fungicides."
+    ]
+  },
+  "Grape___Bacterial_spot": {
+    "summary": "Small angular spots caused by bacteria; may ooze under humidity.",
+    "advice": [
+      "Avoid working with wet plants.",
+      "Use copper sprays carefully.",
+      "Ensure clean pruning shears."
+    ]
+  },
+  "Grape___healthy": {
+    "summary": "The grape leaf looks healthy.",
+    "advice": [
+      "Maintain vineyard sanitation.",
+      "Regularly inspect during humid periods.",
+      "Support proper drainage."
+    ]
+  },
+  "Peach___Bacterial_spot": {
+    "summary": "Bacterial infection forming angular dark lesions on leaves and fruits.",
+    "advice": [
+      "Use copper-based sprays after rainfall.",
+      "Avoid over-fertilization with nitrogen.",
+      "Select disease-resistant cultivars."
+    ]
+  },
+  "Peach___healthy": {
+    "summary": "Healthy peach leaf detected.",
+    "advice": [
+      "Monitor regularly for leaf curl or spots.",
+      "Maintain irrigation schedule.",
+      "Apply compost-based fertilizer occasionally."
+    ]
+  },
+  "Potato___Early_Blight": {
+    "summary": "Brown circular spots with concentric rings caused by Alternaria solani fungus.",
+    "advice": [
+      "Rotate crops to reduce fungal persistence.",
+      "Remove infected leaves early.",
+      "Apply mancozeb or chlorothalonil fungicide."
+    ]
+  },
+  "Potato___Late_Blight": {
+    "summary": "Serious disease causing brown lesions and leaf rot under wet conditions.",
+    "advice": [
+      "Avoid overhead watering.",
+      "Destroy infected plants promptly.",
+      "Use copper-based fungicides before wet weather."
+    ]
+  },
+  "Potato___Healthy": {
+    "summary": "Healthy potato plant detected.",
+    "advice": [
+      "Maintain good soil drainage.",
+      "Avoid excessive nitrogen.",
+      "Check underside of leaves for white mold."
+    ]
+  },
+  "Strawberry___Leaf_Scorch": {
+    "summary": "Fungal disease that dries leaf edges and turns them reddish brown.",
+    "advice": [
+      "Avoid watering late in the day.",
+      "Remove old plant debris.",
+      "Use mulch to prevent splash infection."
+    ]
+  },
+  "Strawberry___Healthy": {
+    "summary": "Healthy strawberry leaf detected.",
+    "advice": [
+      "Ensure steady moisture level.",
+      "Apply compost mulch.",
+      "Inspect weekly for aphids and fungi."
+    ]
+  },
+  "Tomato___Bacterial_Spot": {
+    "summary": "Bacterial disease forming small, water-soaked spots on leaves and fruit.",
+    "advice": [
+      "Avoid handling plants when wet.",
+      "Apply copper-based bactericides.",
+      "Remove infected leaves immediately."
+    ]
+  },
+  "Tomato___Early_Blight": {
+    "summary": "Dark concentric ring spots appearing on lower leaves, spreading upward.",
+    "advice": [
+      "Remove affected foliage.",
+      "Water at soil level instead of overhead.",
+      "Use alternating fungicides during rainy periods."
+    ]
+  },
+  "Tomato___Late_Blight": {
+    "summary": "Deadly fungus-like disease causing leaf rot and white mold under wet conditions.",
+    "advice": [
+      "Do not compost infected plants.",
+      "Avoid touching wet leaves.",
+      "Spray preventive fungicides weekly during high humidity."
+    ]
+  },
+  "Tomato___Healthy": {
+    "summary": "Tomato leaf looks healthy.",
+    "advice": [
+      "Continue monitoring for blight.",
+      "Use mulch to prevent soil splash.",
+      "Provide sunlight 6–8 hours daily."
+    ]
+  },
+  "Unknown": {
+    "summary": "Unrecognized or low-confidence result.",
+    "advice": [
+      "Capture a clearer photo of the infected area.",
+      "Ensure proper lighting.",
+      "Try multiple leaves for better accuracy."
+    ]
+  }
+}

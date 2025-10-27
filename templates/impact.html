@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="container py-5 mt-5 text-center">
+  <h2 class="text-success fw-bold mb-4">🌍 Our Global Impact</h2>
+  <p class="lead text-muted mx-auto" style="max-width: 800px;">
+    GrowSmart is transforming UAE agriculture through technology and sustainability. Here's what we've achieved together.
+  </p>
+  <div class="row justify-content-center mt-5 g-4">
+    <div class="col-md-3">
+      <div class="metric-card p-4 shadow-sm">
+        <div class="metric-value" id="counter1">0</div>
+        <div class="text-muted">Diseases Detected</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card p-4 shadow-sm">
+        <div class="metric-value" id="counter2">0</div>
+        <div class="text-muted">Images Processed</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card p-4 shadow-sm">
+        <div class="metric-value" id="counter3">0</div>
+        <div class="text-muted">Farmers Helped</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const animateCounter = (id, target) => {
+    const el = document.getElementById(id);
+    let count = 0;
+    const step = target / 100;
+    const timer = setInterval(() => {
+      count += step;
+      el.textContent = Math.floor(count);
+      if (count >= target) clearInterval(timer);
+    }, 20);
+  };
+  animateCounter("counter1", 1200);
+  animateCounter("counter2", 3800);
+  animateCounter("counter3", 560);
+});
+</script>
+{% endblock %}

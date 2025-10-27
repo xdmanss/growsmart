@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="grid-dashboard">
+
+    <!-- KPI CARDS -->
+    <div class="kpi-card">
+        <div class="kpi-label">Total Scans</div>
+        <div class="kpi-value">{{ metrics.total_scans }}</div>
+        <div class="kpi-hint">All scans you've submitted</div>
+    </div>
+
+    <div class="kpi-card">
+        <div class="kpi-label">Healthy Leaves %</div>
+        <div class="kpi-value">{{ metrics.healthy_pct }}%</div>
+        <div class="kpi-hint">Plant health rate</div>
+    </div>
+
+    <div class="kpi-card">
+        <div class="kpi-label">Issues Detected %</div>
+        <div class="kpi-value">{{ metrics.disease_pct }}%</div>
+        <div class="kpi-hint">Potential problems</div>
+    </div>
+
+    <div class="kpi-card">
+        <div class="kpi-label">Last Scan</div>
+        <div class="kpi-value">
+            {% if metrics.last_scan_time %}{{ metrics.last_scan_time }}{% else %}—{% endif %}
+        </div>
+        <div class="kpi-hint">Most recent analysis</div>
+    </div>
+
+    <!-- CHART + TIPS -->
+    <div class="panel-card panel-chart">
+        <div class="panel-head">
+            <div class="panel-title">Scan Confidence Over Time</div>
+            <div class="panel-sub">Your last 5 scans</div>
+        </div>
+        <canvas id="scanChart"></canvas>
+
+        <script>
+        window.DASHBOARD_CHART_DATA = {{ scans_for_chart|tojson }};
+        </script>
+    </div>
+
+    <div class="panel-card panel-tips">
+        <div class="panel-head">
+            <div class="panel-title">AI Tips</div>
+            <div class="panel-sub">Live recommendations</div>
+        </div>
+        <div class="tips-carousel" id="tipsCarousel">
+            {% for tip in tips_carousel %}
+            <div class="tip-slide">{{ tip }}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- RECENT SCANS -->
+    <div class="panel-card panel-recent">
+        <div class="panel-head">
+            <div class="panel-title">Recent Scans</div>
+            <div class="panel-sub">Latest leaf checks</div>
+        </div>
+
+        {% if recent_scans|length == 0 %}
+            <div class="empty-block">No scans yet. Try scanning a leaf.</div>
+        {% else %}
+            <ul class="recent-list">
+            {% for scan in recent_scans %}
+                <li class="recent-item">
+                    <div class="recent-main">
+                        <div class="recent-pred">{{ scan.prediction }}</div>
+                        <div class="recent-meta">
+                            {{ (scan.confidence * 100)|round(1) }}% • {{ scan.timestamp }}
+                        </div>
+                    </div>
+                    <div class="recent-thumb">
+                        <img src="{{ scan.image_url }}" alt="leaf"/>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+    <!-- CTA -->
+    <div class="panel-card panel-cta">
+        <div class="cta-title">Ready to analyze a new leaf?</div>
+        <div class="cta-desc">Detect disease early, protect yield, save money.</div>
+        <a class="primary-cta wide" href="{{ url_for('diagnose') }}">Start Diagnosis</a>
+    </div>
+
+</section>
+
+{% endblock %}

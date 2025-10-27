@@ -1,0 +1,17 @@
+{% extends "auth_base.html" %}
+{% block title %}Error {{ code }} • GrowSmart{% endblock %}
+
+{% block content %}
+
+<h1 class="auth-heading">Error {{ code }}</h1>
+
+<div class="auth-error">
+    <p class="lang-en">{{ message_en }}</p>
+    <p class="lang-ar">{{ message_ar }}</p>
+</div>
+
+<div class="auth-switch">
+    <a class="primary-cta" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</div>
+
+{% endblock %}

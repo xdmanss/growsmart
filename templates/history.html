@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • History{% endblock %}
+
+{% block content %}
+
+<section class="panel-card">
+    <div class="panel-head">
+        <div class="panel-title">
+            <span class="lang-en">Scan History</span>
+            <span class="lang-ar">سجل الفحوصات</span>
+        </div>
+        <div class="panel-sub">
+            <span class="lang-en">Your previous leaf analyses</span>
+            <span class="lang-ar">تحليلات الأوراق السابقة</span>
+        </div>
+    </div>
+
+    {% if history_items|length == 0 %}
+    <div class="empty-block">
+        <span class="lang-en">No scans yet.</span>
+        <span class="lang-ar">لا توجد عمليات فحص حتى الآن.</span>
+    </div>
+    {% else %}
+    <div class="history-list">
+        {% for item in history_items %}
+        <div class="history-row" data-scan-id="{{ item.id }}">
+            <div class="history-thumb">
+                <img src="{{ item.image_url }}" alt="leaf"/>
+            </div>
+
+            <div class="history-info">
+                <div><strong>Disease:</strong> {{ item.prediction }}</div>
+                <div><strong>Confidence:</strong> {{ (item.confidence * 100) | round(1) }}%</div>
+                <div><strong>Time:</strong> {{ item.timestamp }}</div>
+            </div>
+
+            <div class="history-actions">
+                <a class="ghost-btn small"
+                   href="{{ url_for('api_download', scan_id=item.id) }}">Download</a>
+
+                <button class="danger-btn small delete-scan-btn">Delete</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="history-bottom">
+        <a class="primary-cta" href="{{ url_for('diagnose') }}">
+            <span class="lang-en">New Scan</span>
+            <span class="lang-ar">فحص جديد</span>
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll(".delete-scan-btn").forEach(btn => {
+    btn.addEventListener("click", async (e) => {
+        const row = e.target.closest(".history-row");
+        const scanId = row.getAttribute("data-scan-id");
+
+        const res = await fetch(`/api/delete/${scanId}`, {
+            method: "POST"
+        });
+        const data = await res.json();
+        if (data.ok) {
+            row.remove();
+        }
+    });
+});
+</script>
+{% endblock %}

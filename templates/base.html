@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" id="html-root">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>{% block title %}GrowSmart{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+        {% include "components/sidebar.html" %}
+    </aside>
+
+    <section class="main-area">
+        <header class="topbar">
+            {% include "components/topbar.html" %}
+        </header>
+
+        <main class="page-body fade-in-up">
+            {% block content %}{% endblock %}
+        </main>
+    </section>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lang.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

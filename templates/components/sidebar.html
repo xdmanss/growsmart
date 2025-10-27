@@ -1,0 +1,78 @@
+<div class="sidebar-inner">
+    <div class="sidebar-header">
+        <div class="logo-block">
+            <img src="{{ url_for('static', filename='img/growsmart-logo.svg') }}" class="sidebar-logo" alt="GrowSmart Logo"/>
+            <div class="logo-texts">
+                <div class="logo-name">GrowSmart</div>
+                <div class="logo-tagline">Smart Farming Assistant</div>
+            </div>
+        </div>
+        <button class="sidebar-collapse-btn" onclick="document.body.classList.toggle('sidebar-collapsed')">
+            ☰
+        </button>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="{{ url_for('dashboard') }}" class="side-link">
+            <span class="side-ic">📊</span>
+            <span class="side-txt">Dashboard</span>
+        </a>
+        <a href="{{ url_for('diagnose') }}" class="side-link">
+            <span class="side-ic">🔍</span>
+            <span class="side-txt">Diagnose</span>
+        </a>
+        <a href="{{ url_for('analysis') }}" class="side-link">
+            <span class="side-ic">📈</span>
+            <span class="side-txt">Analysis</span>
+        </a>
+        <a href="{{ url_for('history') }}" class="side-link">
+            <span class="side-ic">🗂</span>
+            <span class="side-txt">History</span>
+        </a>
+        <a href="{{ url_for('care') }}" class="side-link">
+            <span class="side-ic">🌿</span>
+            <span class="side-txt">Care Guide</span>
+        </a>
+        <a href="{{ url_for('about') }}" class="side-link">
+            <span class="side-ic">💡</span>
+            <span class="side-txt">About</span>
+        </a>
+        <a href="{{ url_for('settings') }}" class="side-link">
+            <span class="side-ic">⚙️</span>
+            <span class="side-txt">Settings</span>
+        </a>
+        <a href="{{ url_for('admin_panel') }}" class="side-link">
+            <span class="side-ic">🛠</span>
+            <span class="side-txt">Admin</span>
+        </a>
+    </nav>
+
+    <!-- ✅ Support Card -->
+    <div class="sidebar-support-card">
+        <div class="support-title">Need Help?</div>
+        <div class="support-desc">Scan or chat with us for crop support and dashboard help.</div>
+
+        <!-- ✅ QR Code -->
+        <div class="support-qr">
+            <img src="{{ url_for('static', filename='img/support-qr.png') }}"
+                 alt="QR to contact support"
+                 class="support-qr-img">
+        </div>
+
+        <div class="support-small">GrowSmart Support</div>
+
+        <!-- ✅ WhatsApp Chat Button -->
+        <a href="https://wa.me/9715XXXXXXXXX?text=Hello%20GrowSmart%20Support%20team!"
+           target="_blank"
+           class="ghost-btn small wide">
+            💬 Chat on WhatsApp
+        </a>
+    </div>
+
+    <div class="sidebar-footer">
+        <a href="{{ url_for('logout') }}" class="logout-btn">🚪 Logout</a>
+        <div class="build-label">
+            GrowSmart v2025 • Expo Build
+        </div>
+    </div>
+</div>

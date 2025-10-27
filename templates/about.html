@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}GrowSmart • About{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <div class="about-header">
+        <h1 class="page-title">
+            <span class="lang-en">About GrowSmart</span>
+            <span class="lang-ar">حول GrowSmart</span>
+        </h1>
+        <p class="page-desc">
+            <span class="lang-en">Empowering farmers through AI-driven plant health analysis and sustainable practices.</span>
+            <span class="lang-ar">تمكين المزارعين من خلال تحليل صحة النبات بالذكاء الاصطناعي وممارسات الاستدامة.</span>
+        </p>
+    </div>
+
+    <div class="about-panels">
+        {% for item in content %}
+        <div class="panel-card">
+            <div class="panel-head">
+                <div class="panel-title">{{ item.title }}</div>
+            </div>
+            <div class="panel-body">
+                {{ item.content | safe }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="about-footer">
+        <p class="footer-note">
+            <span class="lang-en">Made with ❤️ by Team GrowSmart – Innovating for UAE food security and sustainability.</span>
+            <span class="lang-ar">تم إنشاؤه بحب من قبل فريق GrowSmart - نبتكر من أجل الأمن الغذائي والاستدامة في الإمارات.</span>
+        </p>
+    </div>
+</section>
+{% endblock %}
