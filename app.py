@@ -24,6 +24,8 @@ from flask_login import (
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
+
+
 ########################################
 # APP / CONFIG
 ########################################
@@ -266,7 +268,7 @@ def authenticate_user(email, password):
     return User(row["id"], row["email"], row["name"], row["password_hash"])
 
 ########################################
-# AI INFERENCE (STUB)
+# AI MODEL FOR REAL DISEASE PREDICTION
 ########################################
 
 def allowed_file(filename: str) -> bool:
@@ -275,31 +277,85 @@ def allowed_file(filename: str) -> bool:
     ext = filename.rsplit(".", 1)[1].lower()
     return ext in ALLOWED_EXTENSIONS
 
-def run_inference_on_image(image_path: str):
-    """
-    Replace this with your real trained model.
-    Right now we just guess based on filename.
-    """
-    name = os.path.basename(image_path).lower()
+import torch
+from torchvision import transforms
+from PIL import Image
 
-    if "tomato" in name:
-        return {
-            "label": "Tomato Leaf Mold",
-            "confidence": 0.92,
-            "advice": "Remove infected leaves. Increase ventilation. Avoid overhead watering at night.",
-        }
-    elif "apple" in name:
-        return {
-            "label": "Apple Scab",
-            "confidence": 0.88,
-            "advice": "Prune branches for airflow, clear dropped leaves, consider early fungicide.",
-        }
-    else:
-        return {
-            "label": "Healthy Leaf",
-            "confidence": 0.97,
-            "advice": "Looks healthy. Keep consistent watering and monitor for changes.",
-        }
+MODEL_PATH = os.path.join(BASE_DIR, "growsmart_mnv2.pth")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+try:
+    model = torch.load(MODEL_PATH, map_location=device)
+    model.eval()
+    print("✅ GrowSmart model loaded successfully.")
+except Exception as e:
+    model = None
+    print("❌ Error loading model:", e)
+
+# Transformations same as training
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize([0.485, 0.456, 0.406],
+                         [0.229, 0.224, 0.225])
+])
+
+# Classes from your dataset
+CLASS_NAMES = [
+    "Apple___Black_rot",
+    "Apple___Cedar_apple_rust",
+    "Apple___healthy",
+    "Apple___scab",
+    "Bell_Pepper___Bacterial_spot",
+    "Bell_Pepper___healthy",
+    "Cherry___healthy",
+    "Cherry___Powdery_mildew",
+    "Grape___Black_rot",
+    "Grape___Esca_Black_measles",
+    "Grape___healthy",
+    "Grape___Leaf_blight",
+    "Peach___Bacterial_spot",
+    "Peach___healthy",
+    "Potato___Early_Blight",
+    "Potato___Healthy",
+    "Potato___Late_Blight",
+    "Strawberry___Healthy",
+    "Strawberry___Leaf_Scorch",
+    "Tomato___Bacterial_Spot",
+    "Tomato___Early_Blight",
+    "Tomato___Healthy",
+    "Tomato___Late_Blight"
+]
+
+def run_inference_on_image(image_path: str):
+    if model is None:
+        return {"label": "Model not loaded", "confidence": 0, "advice": "Model failed to load."}
+
+    try:
+        img = Image.open(image_path).convert("RGB")
+        img_tensor = transform(img).unsqueeze(0).to(device)
+
+        with torch.no_grad():
+            outputs = model(img_tensor)
+            probs = torch.nn.functional.softmax(outputs, dim=1)
+            confidence, idx = torch.max(probs, 1)
+
+        label = CLASS_NAMES[idx.item()]
+        conf = round(confidence.item() * 100, 2)
+
+        # Generate simple advice
+        if "healthy" in label.lower():
+            advice = "Looks healthy. Maintain watering and monitor regularly."
+        else:
+            advice = f"Detected signs of {label.replace('___', ' ')}. Check care guide for recommendations."
+
+        print(f"🧠 Prediction: {label} ({conf}%)")  # For debugging
+
+        return {"label": label, "confidence": conf, "advice": advice}
+
+    except Exception as e:
+        print("❌ Inference error:", e)
+        return {"label": "Error", "confidence": 0, "advice": str(e)}
 
 ########################################
 # DB OPERATIONS FOR SCANS
