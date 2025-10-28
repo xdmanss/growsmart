@@ -52,10 +52,19 @@ login_manager.init_app(app)
 # DB HELPERS
 ########################################
 
-def get_db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+def get_db(retries=3, delay=1):
+    import time
+    for i in range(retries):
+        try:
+            conn = sqlite3.connect(DB_PATH, check_same_thread=False, timeout=10)
+            conn.row_factory = sqlite3.Row
+            return conn
+        except sqlite3.OperationalError:
+            if i < retries - 1:
+                time.sleep(delay)
+            else:
+                raise
+
 
 def init_db():
     conn = get_db()
